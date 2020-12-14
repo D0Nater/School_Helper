@@ -19,7 +19,7 @@ def get_message(message):
 @Main.BOT.callback_query_handler(func=lambda call: True)
 def query_handler(call):
     chat_id = call.message.chat.id
-    call_data = list(map(str, call.data.split("/")))
+    call_data = call.data.split("/")
 
     print("%s : %s : %s" % (datetime.now(), chat_id, call_data))
 
