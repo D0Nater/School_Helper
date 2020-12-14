@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import telebot
+# import telebot
 from datetime import datetime
 
-from config import Main
+from config import *
 from commands import Command
 from keyboard import Keyboard
 
