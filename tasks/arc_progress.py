@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import telebot
-
-from config import Main
+from config import *
 
 
 class ArithmeticProgression:
