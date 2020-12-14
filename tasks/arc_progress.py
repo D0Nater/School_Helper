@@ -48,7 +48,7 @@ class ArithmeticProgression:
     def search_an(self, chat_id, text=""):
         def num_to_str(num):
             if num > 0:
-                return f" + {num}"
+                return " + %.2f" % num
             elif num < 0:
                 return " - %.2f" % float(str(num).replace("-", ""))
             return ""
@@ -57,7 +57,7 @@ class ArithmeticProgression:
             return a1 + d*(n-1) 
 
         self.answer_text = "Формула нахождения a_n:\na_n = a1+d(n-1)"
-        self.text = text.split(" ")
+        self.text = text.replace(",", ".").split(" ")
 
         try:
             self.a1_num = float(self.text[0])
@@ -69,7 +69,7 @@ class ArithmeticProgression:
 
         self.answer_text += "\n\na_n = %s%s(%s-1)" % (self.a1_num, num_to_str(self.d_num), self.n_num)
         self.answer_text += "\na_n = %s%s" % (self.a1_num, num_to_str(self.d_num*(self.n_num-1)))
-        self.answer_text += "\na_n = %s" % (solve_a_n(self.a1_num, self.d_num, self.n_num))
+        self.answer_text += "\na_n = %.2f" % (solve_a_n(self.a1_num, self.d_num, self.n_num))
 
         Main.BOT.send_message(chat_id, self.answer_text)
 
@@ -82,7 +82,7 @@ class ArithmeticProgression:
             return ""
 
         self.answer_text = "Формула сумма членов арифметической прогрессии:\nS = (a1 + a_n)n / 2"
-        self.text = text.split(" ")
+        self.text = text.replace(",", ".").split(" ")
 
         try:
             self.a1_num = float(self.text[0])
@@ -95,7 +95,7 @@ class ArithmeticProgression:
         answ1 = (self.a1_num + self.a_n_num)*self.n_num
 
         self.answer_text += "\n\nS = (%s%s)*%s / 2" % (self.a1_num, num_to_str(self.a_n_num), self.n_num)
-        self.answer_text += "\nS = %s / 2" % (answ1)
-        self.answer_text += "\nS = %s" % (answ1/2)
+        self.answer_text += "\nS = %.2f / 2" % (answ1)
+        self.answer_text += "\nS = %.2f" % (answ1/2)
 
         Main.BOT.send_message(chat_id, self.answer_text)
