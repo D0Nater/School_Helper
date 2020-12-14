@@ -64,7 +64,7 @@ class Discriminant:
 
         self.answer_text = ""
 
-        self.text = text.split(" ")
+        self.text = text.replace(",", ".").split(" ")
 
         try:
             self.a_num = float(self.text[0])
