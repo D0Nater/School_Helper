@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from config import Main
+from config import *
 from keyboard import Keyboard
 
 """ Tasks """
