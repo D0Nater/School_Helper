@@ -33,6 +33,23 @@ class Keyboard:
         Main.USER_LIST[chat_id]["dir"] = json_dir_name
 
     @staticmethod
+    def rules_keyboard(chat_id, json_dir_name, msg_id):
+        if len(json_dir_name) == 1:
+            Keyboard.lesson_keyboard(chat_id, json_dir_name[0], msg_id)
+            return
+
+        markup = telebot.types.InlineKeyboardMarkup()
+
+        markup.add(telebot.types.InlineKeyboardButton(text="⬅️ Назад", callback_data=json_dir_name[-2]))
+
+        for example in all_rules[json_dir_name[1]]["more"]:
+            example_json = all_rules[json_dir_name[1]]["more"][example]
+            markup.add(telebot.types.InlineKeyboardButton(text=example_json["text"], callback_data="/".join(json_dir_name)+"/"+example))
+
+        Main.BOT.edit_message_text(chat_id=chat_id, message_id=msg_id, text=all_rules[json_dir_name[1]]["text"], reply_markup=markup)
+        Main.USER_LIST[chat_id]["dir"] = "/".join(json_dir_name)
+
+    @staticmethod
     def admin_keyboard(chat_id, _):
         if not chat_id in Main.ADMINS:
             return
