@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from tasks.news import *
 from tasks.rules import *
 from tasks.admin_panel import AdminPanel
 
 from tasks.discriminant import Discriminant
 from tasks.arc_progress import ArithmeticProgression
 
-
-rus_more = {}
-
-eng_more = {}
 
 math_more = {
     "discr": {
@@ -26,17 +23,13 @@ geom_more = {}
 
 
 all_lessons = {
-    "rules":{
+    "news": {
+        "text": "Новости 📰",
+        "more": all_news
+    },
+    "rules": {
         "text": "Правила/Теоремы 📚",
         "more": all_rules
-    },
-    "rus": {
-        "text": "Русский язык 🇷🇺",
-        "more": rus_more
-    },
-    "eng": {
-        "text": "Английский язык 🇬🇧",
-        "more": eng_more
     },
     "math": {
         "text": "Алгебра 🧮",
