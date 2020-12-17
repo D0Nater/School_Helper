@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# import telebot
 from datetime import datetime
+from threading import Thread
 
-from config import *
+from config import Main
 from commands import Command
 from keyboard import Keyboard
+from tasks.rules import Rule
 
 from all_json_data import *
 
@@ -19,6 +20,7 @@ def get_message(message):
 @Main.BOT.callback_query_handler(func=lambda call: True)
 def query_handler(call):
     chat_id = call.message.chat.id
+    message_id = call.message.message_id
     call_data = call.data.split("/")
 
     print("%s : %s : %s" % (datetime.now(), chat_id, call_data))
@@ -28,13 +30,20 @@ def query_handler(call):
 
     try:
         if call_data[0] == "menu":
-            Keyboard.menu_keyboard(chat_id, None, call.message.message_id)
+            Keyboard.menu_keyboard(chat_id, None, message_id)
 
         elif call_data[0] == "admin":
             admin_commands[call_data[1]](chat_id)
 
+        elif call_data[0] == "rules":
+            if len(call_data) <= 2:
+                Keyboard.rules_keyboard(chat_id, call_data, message_id)
+            else:
+                send_rule = Rule()
+                Thread(target=send_rule.send_file, args=(chat_id, call_data)).start()
+
         elif call_data[0] in all_lessons and len(call_data) == 1:
-            Keyboard.lesson_keyboard(chat_id, call_data[0], call.message.message_id)
+            Keyboard.lesson_keyboard(chat_id, call_data[0], message_id)
 
         elif call_data[1] in all_lessons[call_data[0]]["more"]:
             Main.USER_LIST[chat_id]["dir"] = "/".join(call_data)
