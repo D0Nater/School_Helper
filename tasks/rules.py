@@ -1,12 +1,24 @@
 # -*- coding: utf-8 -*-
 
+from os import path
+
 from config import Main
 
 
 class Rule:
-    def write_text(f_dir, file):
-        with open(f"{f_dir}/{file}") as f:
-            Main.BOT.send_message(chat_id=chat_id, text=f.read())
+    def send_file(self, chat_id, json_dir_name):
+        self.dir_name = "rules/" + json_dir_name[1] + "/"
+        self.file_name = json_dir_name[2] + ".pdf"
+
+        self.file_all = self.dir_name + self.file_name
+
+        if not path.exists(self.file_all):
+            Main.BOT.send_message(chat_id, "Dir : %s\nError 404 : file \"%s\" not found.\nСообщите об ошибке администратору!" % (json_dir_name, self.file_all))
+            return
+
+        self.file = open(self.file_all, 'rb')
+        Main.BOT.send_document(chat_id, self.file)
+        self.file.close()
 
 
 rus_rules = {}
@@ -14,10 +26,17 @@ rus_rules = {}
 eng_rules = {}
 
 math_rules = {
-    # Abbreviated multiplication formulas
     "AMF": {
-        "text": "Формулы сокращенного умножения",
-        "file": "AMF.txt"
+        "text": "Формулы сокращенного умножения"
+    },
+    "QuadraticEquation": {
+        "text": "Квадратное уравнение"
+    },
+    "APR": {
+        "text": "Арифметическая прогрессия"
+    },
+    "GPR": {
+        "text": "Геометрическая прогрессия"
     }
 }
 
